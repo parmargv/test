@@ -1,5 +1,5 @@
 import urllib
-import bs4
+from bs4 import BeautifulSoup as bs
 from urllib.request import Request, urlopen
 import requests
 import pandas as pd
@@ -15,18 +15,18 @@ def economics():
 
     r = requests.get(url, {'headers': headers})
 
-    soup = bs4.BeautifulSoup(r.text, 'html.parser')
+    soup = bs(r.text, 'html.parser')
     h1 = soup.find_all('div', {'class': 'eachStory'})[0].find_all('a')[-1].text
 
-    soup = bs4.BeautifulSoup(r.text, 'html.parser')
+    soup = bs(r.text, 'html.parser')
     h2 = soup.find_all('div', {'class': 'eachStory'})[1].find_all('a')[-1].text
 
-    soup = bs4.BeautifulSoup(r.text, 'html.parser')
+    soup = bs(r.text, 'html.parser')
     h3 = soup.find_all('div', {'class': 'eachStory'})[2].find_all('a')[-1].text
 
-    soup = bs4.BeautifulSoup(r.text, 'html.parser')
+    soup = bs(r.text, 'html.parser')
     h4 = soup.find_all('div', {'class': 'eachStory'})[3].find_all('a')[-1].text
-    soup = bs4.BeautifulSoup(r.text, 'html.parser')
+    soup = bs(r.text, 'html.parser')
     h5 = soup.find_all('div', {'class': 'eachStory'})[4].find_all('a')[-1].text
 
     data = [h1, h2, h3, h4]
@@ -43,7 +43,7 @@ def earning():
     }
 
     r = requests.get(url, {'headers': headers})
-    soup = bs4.BeautifulSoup(r.text, 'html.parser')
+    soup = bs(r.text, 'html.parser')
     i = len(soup.find_all('div', {'class': 'subSec'})[0].find_all('a'))
 
     h23 = soup.find_all('div', {'class': 'subSec'})[0].find_all('a')[1].text
@@ -68,7 +68,7 @@ def bloomberg():
     # resp = urllib.request.urlopen(req)
     r = requests.get(url, {'headers': headers})
 
-    soup = bs4.BeautifulSoup(r.text, 'html.parser')
+    soup = bs(r.text, 'html.parser')
     hc = len(soup.find_all('div', {'class': 'latest-updates-m__latest-updates__QOCdR'})[0].find_all('a'))
     h33 = soup.find_all('div', {'class': 'latest-updates-m__latest-updates__QOCdR'})[0].find_all('a')[1].text
     h34 = soup.find_all('div', {'class': 'latest-updates-m__latest-updates__QOCdR'})[0].find_all('a')[2].text
@@ -109,7 +109,7 @@ def cnbc():
     req = urllib.request.Request(url, headers=headers)
     resp = urllib.request.urlopen(req)
 
-    soup = bs4.BeautifulSoup(resp, 'html.parser')
+    soup = bs(resp, 'html.parser')
     h33 = soup.find_all('h3', {'class': 'jsx-4433d92fbb397a0b top-news-ttl'})[0].text
     h34 = soup.find_all('h3', {'class': 'jsx-4433d92fbb397a0b top-news-ttl'})[1].text
     h35 = soup.find_all('h3', {'class': 'jsx-4433d92fbb397a0b top-news-ttl'})[2].text
@@ -125,7 +125,7 @@ def bt():
         'User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
     req = urllib.request.Request(url, headers=headers)
     resp = urllib.request.urlopen(req)
-    soup = bs4.BeautifulSoup(resp, 'html.parser')
+    soup = bs(resp, 'html.parser')
     h11 = soup.find_all('div', {'class': 'widget-listing'})[0].text
     h22 = soup.find_all('div', {'class': 'widget-listing'})[1].text
     h33 = soup.find_all('div', {'class': 'widget-listing'})[2].text

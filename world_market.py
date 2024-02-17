@@ -1,5 +1,5 @@
 import requests
-import bs4
+
 import urllib.parse
 from urllib.request import Request, urlopen
 import pandas as pd
@@ -39,7 +39,7 @@ def cash():
     req = urllib.request.Request(url, headers=headers)
     resp = urllib.request.urlopen(req)
 
-    soup = bs4.BeautifulSoup(resp, 'html.parser')
+    soup = bs(resp, 'html.parser')
     table3 = soup.find('div', {'class': 'fidi_tbescrol table-responsive'})
     trs = table3.find_all('tr')
     rows = []
