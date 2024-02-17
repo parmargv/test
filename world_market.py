@@ -3,28 +3,32 @@ import bs4
 import urllib.parse
 from urllib.request import Request, urlopen
 import pandas as pd
+from bs4 import BeautifulSoup as bs
+
+# def Inveting():
+#     # ----------------------INVESTING STOCK LIVE----------------------------------
+#     url = "https://in.investing.com/indices/indices-futures"
+#     headers = {}
+#     headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
+#
+#     req = urllib.request.Request(url, headers=headers)
+#     resp = urllib.request.urlopen(req)
+#     print(resp)  # This will print infor
+    # content = resp.read()  # Read the response content
+    # soup = bs4.BeautifulSoup(content, 'html.parser')
 
 
-def Inveting():
-    # ----------------------INVESTING STOCK LIVE----------------------------------
-    url = "https://in.investing.com/indices/indices-futures"
-    headers = {}
-    headers[
-        'User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
-    req = urllib.request.Request(url, headers=headers)
-    resp = urllib.request.urlopen(req)
-
-    soup = bs4.BeautifulSoup(resp, 'html.parser')
-    table = soup.find('div', {'class': 'common-table-scroller js-table-scroller'})
-    trs = table.find_all('tr')
-    rows = []
-    columns = ['checkbox', 'flag', 'Name', 'Month', 'Last', 'High', 'Low', 'Chg', 'Chg(%)', 'Time']
-    for tr in trs[1:]:
-        tds = tr.find_all('td')
-        row = [td.text.replace('\n', '').strip() for td in tds]
-        rows.append(row)
-    df = pd.DataFrame(rows, columns=columns)
-    return df
+    # soup = bs4.BeautifulSoup(resp, 'html.parser')
+    # table = soup.find('div', {'class': 'common-table-scroller js-table-scroller'})
+    # trs = table.find_all('tr')
+    # rows = []
+    # columns = ['checkbox', 'flag', 'Name', 'Month', 'Last', 'High', 'Low', 'Chg', 'Chg(%)', 'Time']
+    # for tr in trs[1:]:
+    #     tds = tr.find_all('td')
+    #     row = [td.text.replace('\n', '').strip() for td in tds]
+    #     rows.append(row)
+    # df = pd.DataFrame(rows, columns=columns)
+    # return df
 
 
 def cash():
@@ -107,6 +111,71 @@ class India_news():
         news = [title for title in r]
         df = pd.DataFrame(news)
         return df
+class fo():
+    def gainers(self):
+        url = "https://www.moneycontrol.com/stocks/fno/marketstats/futures/gainers/homebody.php?opttopic=gainers&optinst=stkfut&sel_mth=1&sort_order=0"
+        headers = {}
+        headers[
+            'User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
+        req = urllib.request.Request(url, headers=headers)
+        resp = urllib.request.urlopen(req)
+
+        soup = bs(resp, 'html.parser')
+        table1 = soup.find('div', {'class': 'MT15'})
+        trs = table1.find_all('tr')
+        rows = []
+        columns = ['SYMB', 'EXP', 'LTP', 'CH', 'CH(%)', 'H-L', 'AVG', 'VOL', 'VALUE', 'OI', 'OI-CH']
+        for tr in trs[1:]:
+            tds = tr.find_all('td')
+            row = [td.text.replace('\n', '').strip() for td in tds]
+            rows.append(row)
+        df1 = pd.DataFrame(rows, columns=columns)
+        df1.drop(['VALUE'], axis=1, inplace=True)
+        df1.reset_index(drop=True, inplace=False)
+
+        oi = df1['OI-CH'].str.split("\r", expand=True)
+
+        vol = df1['VOL'].str.split("\r\t\t\t\t\t\t\t\t", expand=True)
+        df1.drop(['EXP', 'CH', 'H-L', 'AVG', 'OI-CH', 'VOL'], axis=1, inplace=True)
+        df1["OI"] = oi[0]
+        df1["OI(%)"] = oi[1]
+        df1.drop(['OI'], axis=1, inplace=True)
+        df1["VOL"] = vol[0]
+        df11 = df1.iloc[0:10, 0:4]
+        return df11
+    def loosers(self):
+        url = "https://www.moneycontrol.com/stocks/fno/marketstats/futures/losers/homebody.php?opttopic=losers&optinst=stkfut&sel_mth=1&sort_order=0"
+        headers = {}
+        headers[
+            'User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
+        req = urllib.request.Request(url, headers=headers)
+        resp = urllib.request.urlopen(req)
+
+        soup = bs(resp, 'html.parser')
+        table2 = soup.find('div', {'class': 'MT15'})
+        trs = table2.find_all('tr')
+        rows = []
+        columns = ['SYMB', 'EXP', 'LTP', 'CH', 'CH(%)', 'H-L', 'AVG', 'VOL', 'VALUE', 'OI', 'OI-CH']
+        for tr in trs[1:]:
+            tds = tr.find_all('td')
+            row = [td.text.replace('\n', '').strip() for td in tds]
+            rows.append(row)
+        df2 = pd.DataFrame(rows, columns=columns)
+
+        df2.drop(['VALUE'], axis=1, inplace=True)
+        df2.reset_index(drop=True, inplace=False)
+        oi = df2['OI-CH'].str.split("\r", expand=True)
+        vol = df2['VOL'].str.split("\r\t\t\t\t\t\t\t\t", expand=True)
+        df2.drop(['EXP', 'CH', 'H-L', 'AVG', 'OI-CH', 'VOL'], axis=1, inplace=True)
+        df2["OI"] = oi[0]
+        df2["OI(%)"] = oi[1]
+        df2.drop(['OI'], axis=1, inplace=True)
+        # df2["VOL"] = vol[0]
+        df22 = df2.iloc[0:10, 0:4]
+        return df22
+
+
+
 # d=economics_data()
 # data=d.News()
 # print(data['title'][1])
