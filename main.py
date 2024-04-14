@@ -1,4 +1,3 @@
-import base64
 import urllib
 from urllib.request import Request, urlopen
 import streamlit as st

@@ -78,29 +78,29 @@ def bloomberg():
     data4 = [h33, h34, h35, h36, h37]
     df = pd.DataFrame(data4)
     return df
-def investing():
-    url = "https://in.investing.com/news/latest-news"
-    headers = {}
-    headers[
-        'User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
-    req = urllib.request.Request(url, headers=headers)
-    resp = urllib.request.urlopen(req)
-
-    soup = bs4.BeautifulSoup(resp, 'html.parser')
-
-    h18 = soup.find_all('div', {'class': 'content'})[0].find_all('h3', {'class': 'title'})[0].find_all('a')[0].text
-
-    h19 = soup.find_all('ul', {'class': 'common-articles-list'})[0].find_all('h3', {'class': 'title'})[0].find_all('a')[
-        0].text
-    h20 = soup.find_all('ul', {'class': 'common-articles-list'})[0].find_all('h3', {'class': 'title'})[1].find_all('a')[
-        0].text
-    h21 = soup.find_all('ul', {'class': 'common-articles-list'})[0].find_all('h3', {'class': 'title'})[2].find_all('a')[
-        0].text
-    h22 = soup.find_all('ul', {'class': 'common-articles-list'})[0].find_all('h3', {'class': 'title'})[3].find_all('a')[
-        0].text
-    data2 = {'Investing India': [h18, h19, h20, h21, h22]}
-    df = pd.DataFrame(data2)
-    return df
+# def investing():
+#     url = "https://in.investing.com/news/latest-news"
+#     headers = {}
+#     headers[
+#         'User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
+#     req = urllib.request.Request(url, headers=headers)
+#     resp = urllib.request.urlopen(req)
+#
+#     soup = bs4.BeautifulSoup(resp, 'html.parser')
+#
+#     h18 = soup.find_all('div', {'class': 'content'})[0].find_all('h3', {'class': 'title'})[0].find_all('a')[0].text
+#
+#     h19 = soup.find_all('ul', {'class': 'common-articles-list'})[0].find_all('h3', {'class': 'title'})[0].find_all('a')[
+#         0].text
+#     h20 = soup.find_all('ul', {'class': 'common-articles-list'})[0].find_all('h3', {'class': 'title'})[1].find_all('a')[
+#         0].text
+#     h21 = soup.find_all('ul', {'class': 'common-articles-list'})[0].find_all('h3', {'class': 'title'})[2].find_all('a')[
+#         0].text
+#     h22 = soup.find_all('ul', {'class': 'common-articles-list'})[0].find_all('h3', {'class': 'title'})[3].find_all('a')[
+#         0].text
+#     data2 = {'Investing India': [h18, h19, h20, h21, h22]}
+#     df = pd.DataFrame(data2)
+#     return df
 def cnbc():
     url = "https://www.cnbctv18.com/market/stocks/"
     headers = {}
