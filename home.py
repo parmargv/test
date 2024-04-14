@@ -1,5 +1,5 @@
 import urllib
-from bs4 import BeautifulSoup as bs
+import bs4
 from urllib.request import Request, urlopen
 import requests
 import pandas as pd
@@ -15,18 +15,18 @@ def economics():
 
     r = requests.get(url, {'headers': headers})
 
-    soup = bs(r.text, 'html.parser')
+    soup = bs4.BeautifulSoup(r.text, 'html.parser')
     h1 = soup.find_all('div', {'class': 'eachStory'})[0].find_all('a')[-1].text
 
-    soup = bs(r.text, 'html.parser')
+    soup = bs4.BeautifulSoup(r.text, 'html.parser')
     h2 = soup.find_all('div', {'class': 'eachStory'})[1].find_all('a')[-1].text
 
-    soup = bs(r.text, 'html.parser')
+    soup = bs4.BeautifulSoup(r.text, 'html.parser')
     h3 = soup.find_all('div', {'class': 'eachStory'})[2].find_all('a')[-1].text
 
-    soup = bs(r.text, 'html.parser')
+    soup = bs4.BeautifulSoup(r.text, 'html.parser')
     h4 = soup.find_all('div', {'class': 'eachStory'})[3].find_all('a')[-1].text
-    soup = bs(r.text, 'html.parser')
+    soup = bs4.BeautifulSoup(r.text, 'html.parser')
     h5 = soup.find_all('div', {'class': 'eachStory'})[4].find_all('a')[-1].text
 
     data = [h1, h2, h3, h4]
@@ -43,7 +43,7 @@ def earning():
     }
 
     r = requests.get(url, {'headers': headers})
-    soup = bs(r.text, 'html.parser')
+    soup = bs4.BeautifulSoup(r.text, 'html.parser')
     i = len(soup.find_all('div', {'class': 'subSec'})[0].find_all('a'))
 
     h23 = soup.find_all('div', {'class': 'subSec'})[0].find_all('a')[1].text
@@ -68,7 +68,7 @@ def bloomberg():
     # resp = urllib.request.urlopen(req)
     r = requests.get(url, {'headers': headers})
 
-    soup = bs(r.text, 'html.parser')
+    soup = bs4.BeautifulSoup(r.text, 'html.parser')
     hc = len(soup.find_all('div', {'class': 'latest-updates-m__latest-updates__QOCdR'})[0].find_all('a'))
     h33 = soup.find_all('div', {'class': 'latest-updates-m__latest-updates__QOCdR'})[0].find_all('a')[1].text
     h34 = soup.find_all('div', {'class': 'latest-updates-m__latest-updates__QOCdR'})[0].find_all('a')[2].text
@@ -78,29 +78,29 @@ def bloomberg():
     data4 = [h33, h34, h35, h36, h37]
     df = pd.DataFrame(data4)
     return df
-# def investing():
-#     url = "https://in.investing.com/news/latest-news"
-#     headers = {}
-#     headers[
-#         'User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
-#     req = urllib.request.Request(url, headers=headers)
-#     resp = urllib.request.urlopen(req)
-#
-#     soup = bs4.BeautifulSoup(resp, 'html.parser')
-#
-#     h18 = soup.find_all('div', {'class': 'content'})[0].find_all('h3', {'class': 'title'})[0].find_all('a')[0].text
-#
-#     h19 = soup.find_all('ul', {'class': 'common-articles-list'})[0].find_all('h3', {'class': 'title'})[0].find_all('a')[
-#         0].text
-#     h20 = soup.find_all('ul', {'class': 'common-articles-list'})[0].find_all('h3', {'class': 'title'})[1].find_all('a')[
-#         0].text
-#     h21 = soup.find_all('ul', {'class': 'common-articles-list'})[0].find_all('h3', {'class': 'title'})[2].find_all('a')[
-#         0].text
-#     h22 = soup.find_all('ul', {'class': 'common-articles-list'})[0].find_all('h3', {'class': 'title'})[3].find_all('a')[
-#         0].text
-#     data2 = {'Investing India': [h18, h19, h20, h21, h22]}
-#     df = pd.DataFrame(data2)
-#     return df
+def investing():
+    url = "https://in.investing.com/news/latest-news"
+    headers = {}
+    headers[
+        'User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
+    req = urllib.request.Request(url, headers=headers)
+    resp = urllib.request.urlopen(req)
+
+    soup = bs4.BeautifulSoup(resp, 'html.parser')
+
+    h18 = soup.find_all('div', {'class': 'content'})[0].find_all('h3', {'class': 'title'})[0].find_all('a')[0].text
+
+    h19 = soup.find_all('ul', {'class': 'common-articles-list'})[0].find_all('h3', {'class': 'title'})[0].find_all('a')[
+        0].text
+    h20 = soup.find_all('ul', {'class': 'common-articles-list'})[0].find_all('h3', {'class': 'title'})[1].find_all('a')[
+        0].text
+    h21 = soup.find_all('ul', {'class': 'common-articles-list'})[0].find_all('h3', {'class': 'title'})[2].find_all('a')[
+        0].text
+    h22 = soup.find_all('ul', {'class': 'common-articles-list'})[0].find_all('h3', {'class': 'title'})[3].find_all('a')[
+        0].text
+    data2 = {'Investing India': [h18, h19, h20, h21, h22]}
+    df = pd.DataFrame(data2)
+    return df
 def cnbc():
     url = "https://www.cnbctv18.com/market/stocks/"
     headers = {}
@@ -109,15 +109,15 @@ def cnbc():
     req = urllib.request.Request(url, headers=headers)
     resp = urllib.request.urlopen(req)
 
-    soup = bs(resp, 'html.parser')
-    h33 = soup.find_all('h3', {'class': 'jsx-4433d92fbb397a0b top-news-ttl'})[0].text
-    h34 = soup.find_all('h3', {'class': 'jsx-4433d92fbb397a0b top-news-ttl'})[1].text
-    h35 = soup.find_all('h3', {'class': 'jsx-4433d92fbb397a0b top-news-ttl'})[2].text
-    h36 = soup.find_all('h3', {'class': 'jsx-4433d92fbb397a0b top-news-ttl'})[3].text
+    soup = bs4.BeautifulSoup(resp, 'html.parser')
+    h33 = soup.find_all('div', {'class': 'jsx-95506e352219bddb story-meta'})[0].find_all('h2',{'class':'jsx-95506e352219bddb story-title'})[0].text
+    h34 = soup.find_all('div', {'class': 'jsx-95506e352219bddb story-meta'})[1].find_all('h2', {'class': 'jsx-95506e352219bddb story-title'})[0].text
+    h35 = soup.find_all('div', {'class': 'jsx-95506e352219bddb story-meta'})[2].find_all('h2', {'class': 'jsx-95506e352219bddb story-title'})[0].text
+    h36 = soup.find_all('div', {'class': 'jsx-95506e352219bddb story-meta'})[3].find_all('h2', {'class': 'jsx-95506e352219bddb story-title'})[0].text
     #data3 = {'CNBC News': [h33, h34, h35, h36]}
-    data3 = [h33, h34, h35, h36]
-    df = pd.DataFrame(data3)
-    return data3
+    data33 = [h33, h34,h35,h36]
+    df = pd.DataFrame(data33)
+    return df
 def bt():
     url = "https://www.businesstoday.in/markets/company-stock"
     headers = {}
@@ -125,7 +125,7 @@ def bt():
         'User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
     req = urllib.request.Request(url, headers=headers)
     resp = urllib.request.urlopen(req)
-    soup = bs(resp, 'html.parser')
+    soup = bs4.BeautifulSoup(resp, 'html.parser')
     h11 = soup.find_all('div', {'class': 'widget-listing'})[0].text
     h22 = soup.find_all('div', {'class': 'widget-listing'})[1].text
     h33 = soup.find_all('div', {'class': 'widget-listing'})[2].text
@@ -144,3 +144,4 @@ def bt():
     list={'Bussiness today':[h11,h22,h33,h44,h55]}
     df = pd.DataFrame(list)
     return df
+
