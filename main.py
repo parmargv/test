@@ -188,17 +188,19 @@ def main():
         df_us = wm.us_market()
         df_eu =wm.euro_market()
         df_asia=wm.asia_market()
+        df1 = world_market.groww_data()
+        st.table(df1)
+        # col1, col2,col3= st.columns(3)
+        # with col1:
+        #     st.markdown(f'<h1 style="color:#D78A1B;font-size:25px;">{"Indices us market"}</h1>',unsafe_allow_html=True)
+        #     st.table(df_us)
+        # with col2:
+        #     st.markdown(f'<h1 style="color:#D78A1B;font-size:25px;">{"Indices Europe"}</h1>',unsafe_allow_html=True)
+        #     st.table(df_eu)
+        # with col3:
+        #     st.markdown(f'<h1 style="color:#D78A1B;font-size:25px;">{"Indices asian market"}</h1>',unsafe_allow_html=True)
+        #     st.table(df_asia)
 
-        col1, col2,col3= st.columns(3)
-        with col1:
-            st.markdown(f'<h1 style="color:#D78A1B;font-size:25px;">{"Indices us market"}</h1>',unsafe_allow_html=True)
-            st.table(df_us)
-        with col2:
-            st.markdown(f'<h1 style="color:#D78A1B;font-size:25px;">{"Indices Europe"}</h1>',unsafe_allow_html=True)
-            st.table(df_eu)
-        with col3:
-            st.markdown(f'<h1 style="color:#D78A1B;font-size:25px;">{"Indices asian market"}</h1>',unsafe_allow_html=True)
-            st.table(df_asia)
     def FII_data():
         df = world_market.cash()
         hide_table_row_index = """

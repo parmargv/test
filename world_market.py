@@ -211,61 +211,70 @@ class money():
         selected_columns = ['name', 'price', 'net_change', 'percent_change']
         us_market_selected_df = us_market_df[selected_columns]
         return us_market_selected_df
+class groww():
+    def __init__(self):
+        self.headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36'}
+        self.session = requests.Session()
+        self.session.get("https://groww.in/indices/global-indices", headers=self.headers)
+    def Gobal_Indices(self):
+        r = self.session.get(f"https://groww.in/v1/api/stocks_data/v1/global_instruments?instrumentType=GLOBAL_INSTRUMENTS",headers=self.headers).json()
+        indices = [data for data in r['aggregatedGlobalInstrumentDto']]
+        # nifty50_g = [data['PE'] for data in r['filtered']['data'] if "PE" in data]
+        df = pd.DataFrame(indices)
+        return df
+def groww_data():
+    d=groww()
+    data=d.Gobal_Indices()
+    giftnifty = data['livePriceDto']
+    gnifty = (data['livePriceDto'][0])
+    gift_ltp = int(gnifty['value'])
+    gift_ch = int(gnifty['dayChange'])
+    gift_per = (gnifty['dayChangePerc'])
+    dow_f = (data['livePriceDto'][1])
+    dowf_ltp = int(dow_f['value'])
+    dowf_ch = int(dow_f['dayChange'])
+    dowf_per = (dow_f['dayChangePerc'])
+    dow = (data['livePriceDto'][3])
+    dow_ltp = int(dow['value'])
+    dow_ch = int(dow['dayChange'])
+    dow_per = (dow['dayChangePerc'])
+    nas = (data['livePriceDto'][2])
+    nas_ltp = int(nas['value'])
+    nas_ch = int(nas['dayChange'])
+    nas_per = (nas['dayChangePerc'])
+    sp=(data['livePriceDto'][4])
+    sp_ltp = int(sp['value'])
+    sp_ch = int(sp['dayChange'])
+    sp_per = (sp['dayChangePerc'])
+    nk=(data['livePriceDto'][5])
+    nk_ltp = int(nk['value'])
+    nk_ch = int(nk['dayChange'])
+    nk_per = (nk['dayChangePerc'])
+    hs=(data['livePriceDto'][6])
+    hs_ltp = int(hs['value'])
+    hs_ch = int(hs['dayChange'])
+    hs_per = (hs['dayChangePerc'])
+    dax=(data['livePriceDto'][7])
+    dax_ltp = int(dax['value'])
+    dax_ch = int(dax['dayChange'])
+    dax_per = (dax['dayChangePerc'])
+    ftse=(data['livePriceDto'][8])
+    ftse_ltp = int(ftse['value'])
+    ftse_ch = int(ftse['dayChange'])
+    ftse_per = (ftse['dayChangePerc'])
+    cac=(data['livePriceDto'][7])
+    cac_ltp = int(cac['value'])
+    cac_ch = int(cac['dayChange'])
+    cac_per = (cac['dayChangePerc'])
+    data = {
+        "INDICES":['GIFT_NIFTY','DOW_FUT','DOW','NASDAQ','S&P','NIKKIE','HANG_SANG','DAX','FTSE','CAC'],
+        "%":[gift_per,dowf_per,dow_per,nas_per,sp_per,nk_per,hs_per,dax_per,ftse_per,cac_per],
+        "CHAGE":[gift_ch,dowf_ch,dow_ch,nas_ch,sp_ch,nk_ch,hs_ch,dax_ch,ftse_ch,cac_ch],
+        "LTP":[gift_ltp,dowf_ltp,dow_ltp,nas_ltp,sp_ltp,nk_ltp,hs_ltp,dax_ltp,ftse_ltp,cac_ltp]
+    }
 
-# wm=money()
-# data=wm.euro_market()
-# print(data)
-    # trs = tbody.find_all('tr')
-    # print(trs)
-    # Check if the <tbody> element is found
-    # if tbody:
-    #     # Find all rows in the <tbody> element
-    #     rows = tbody.find_all('tr')[0].find_all('span',{'class':'marketData_web_mE_nm__jSXqk'})
-    #
-    #     # Loop through each row and extract data
-    #     for row in rows:
-    #         # Find all cells in the row
-    #         cells = row.find_all('span',{'class':'marketData_web_mE_nm__jSXqk'})
-    #
-    #         # Extract data from each cell and print it
-    #         for cell in cells:
-    #             print(cell.text.strip())
-    # else:
-    #     print("<tbody> element not found on the page.")
+    df = pd.DataFrame(data)
+    return df
 
 
-    # Find the table containing the indices data
-    #table = soup.find('div', class_='marketData_web_tab-content__o2KZL')
-    # Check if the table is found
-    # if table:
-    #     # Find all rows in the table
-    #     rows = table.find_all('tr')
-    #
-    #     # Loop through each row and extract data
-    #     for row in rows[1:]:  # Skip the header row (index 0)
-    #         # Extract data from each column in the row
-    #         columns = row.find_all('td')
-    #         index_name = columns[0].text.strip()
-    #         last_price = columns[1].text.strip()
-    #         change = columns[2].text.strip()
-    #         change_percent = columns[3].text.strip()
-    #
-    #         # Print the extracted data
-    #         print("Index:", index_name)
-    #         print("Last Price:", last_price)
-    #         print("Change:", change)
-    #         print("Change Percent:", change_percent)
-    #         print("-----------------------------")
-    # else:
-    #     print("Indices table not found on the page.")
-
-# nifty=OI_NIFTY()
-# df=nifty.Nifty_looser()
-# print(df['symbol'][0])
-# print(df['perChange'][0])
-# d=India_news()
-# data=d.News_india()
-# print(data['title'][19])
-# g= fo()
-# df=g.gainers()
-# print(df)
