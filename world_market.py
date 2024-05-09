@@ -1,6 +1,5 @@
 import requests
 import bs4
-import urllib3
 import urllib.parse
 from urllib.request import Request, urlopen
 import pandas as pd
