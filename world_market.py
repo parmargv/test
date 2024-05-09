@@ -6,28 +6,6 @@ from urllib.request import Request, urlopen
 import pandas as pd
 from bs4 import BeautifulSoup as bs
 
-# def Inveting():
-#     # ----------------------INVESTING STOCK LIVE----------------------------------
-#     url = "https://in.investing.com/indices/indices-futures"
-#     headers = {}
-#     headers[
-#         'User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
-#     req = urllib.request.Request(url, headers=headers)
-#     resp = urllib.request.urlopen(req)
-#
-#     soup = bs4.BeautifulSoup(resp, 'html.parser')
-#     table = soup.find('div', {'class': 'common-table-scroller js-table-scroller'})
-#     trs = table.find_all('tr')
-#     rows = []
-#     columns = ['checkbox', 'flag', 'Name', 'Month', 'Last', 'High', 'Low', 'Chg', 'Chg(%)', 'Time']
-#     for tr in trs[1:]:
-#         tds = tr.find_all('td')
-#         row = [td.text.replace('\n', '').strip() for td in tds]
-#         rows.append(row)
-#     df = pd.DataFrame(rows, columns=columns)
-#     return df
-
-
 def cash():
     url = "https://www.moneycontrol.com/stocks/marketstats/fii_dii_activity/index.php"
     headers = {}
