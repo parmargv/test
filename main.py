@@ -302,7 +302,7 @@ def main():
         st.write(f"You selected: {selected_main_menu}")
 
 if __name__ == "__main__":
-    india_timezone = pytz.timezone('Asia/Kolkata')
-    current_time = datetime.datetime.now(india_timezone).time()
-    current_day = datetime.datetime.today().weekday()
+    # india_timezone = pytz.timezone('Asia/Kolkata')
+    # current_time = datetime.datetime.now(india_timezone).time()
+    # current_day = datetime.datetime.today().weekday()
     main()
