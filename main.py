@@ -11,11 +11,11 @@ from datetime import date
 
 def main():
     st.set_page_config(page_title=None, page_icon=None, layout="wide", initial_sidebar_state="auto", menu_items=None)
-    india_timezone = pytz.timezone('Asia/Kolkata')
-    now = datetime.datetime.now(india_timezone).time()
-    today = date.today()
-    today_name = today.strftime("%A")
-    formatted_time = now.strftime("%H:%M:%S %Z")
+    # india_timezone = pytz.timezone('Asia/Kolkata')
+    # now = datetime.datetime.now(india_timezone).time()
+    # today = date.today()
+    # today_name = today.strftime("%A")
+    # formatted_time = now.strftime("%H:%M:%S %Z")
     def news():
         st_autorefresh(interval=60 * 1000, key="dataframerefresh")
         data = home.economics()
@@ -243,11 +243,11 @@ def main():
             st.table(df)
 
     #st.markdown(f'<marquee behavior="scroll" direction="left">Current_Time:{formatted_time},Today:-{today_name},Login_state:-{login_state},User_Name:{user_name}</marquee>', unsafe_allow_html=True)
-    col1, col2, col3 ,col4 = st.columns(4)
-    with col1:
-        st.write(f"Last updated time: {formatted_time}")
-    with col2:
-        st.write(f"Today is: {today_name}")
+    # col1, col2, col3 ,col4 = st.columns(4)
+    # with col1:
+    #     st.write(f"Last updated time: {formatted_time}")
+    # with col2:
+    #     st.write(f"Today is: {today_name}")
 
     activity = ['Home', 'Market_data']
 
