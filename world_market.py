@@ -38,7 +38,6 @@ def cash():
 
 
 class OI_NIFTY:
-
     def __init__(self):
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36'}
@@ -92,68 +91,154 @@ class India_news():
         news = [title for title in r]
         df = pd.DataFrame(news)
         return df
-class fo():
-    def gainers(self):
-        url = "https://www.moneycontrol.com/stocks/fno/marketstats/futures/gainers/homebody.php?opttopic=gainers&optinst=stkfut&sel_mth=1&sort_order=0"
-        headers = {}
-        headers[
-            'User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
-        req = urllib.request.Request(url, headers=headers)
-        resp = urllib.request.urlopen(req)
+# class fo():
+#     def gainers(self):
+#         url = "https://www.moneycontrol.com/stocks/fno/marketstats/futures/gainers/homebody.php?opttopic=gainers&optinst=stkfut&sel_mth=1&sort_order=0"
+#         headers = {}
+#         headers[
+#             'User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
+#         req = urllib.request.Request(url, headers=headers)
+#         resp = urllib.request.urlopen(req)
+#
+#         soup = bs(resp, 'html.parser')
+#         table1 = soup.find('div', {'class': 'MT15'})
+#         trs = table1.find_all('tr')
+#         rows = []
+#         columns = ['SYMB', 'EXP', 'LTP', 'CH', 'CH(%)', 'H-L', 'AVG', 'VOL', 'VALUE', 'OI', 'OI-CH']
+#         for tr in trs[1:]:
+#             tds = tr.find_all('td')
+#             row = [td.text.replace('\n', '').strip() for td in tds]
+#             rows.append(row)
+#         df1 = pd.DataFrame(rows, columns=columns)
+#         df1.drop(['VALUE'], axis=1, inplace=True)
+#         df1.reset_index(drop=True, inplace=False)
+#
+#         oi = df1['OI-CH'].str.split("\r", expand=True)
+#
+#         vol = df1['VOL'].str.split("\r\t\t\t\t\t\t\t\t", expand=True)
+#         df1.drop(['EXP', 'CH', 'H-L', 'AVG', 'OI-CH', 'VOL'], axis=1, inplace=True)
+#         df1["OI"] = oi[0]
+#         df1["OI(%)"] = oi[1]
+#         df1.drop(['OI'], axis=1, inplace=True)
+#         df1["VOL"] = vol[0]
+#         df11 = df1.iloc[0:10, 0:4]
+#         return df11
+#     def loosers(self):
+#         url = "https://www.moneycontrol.com/stocks/fno/marketstats/futures/losers/homebody.php?opttopic=losers&optinst=stkfut&sel_mth=1&sort_order=0"
+#         headers = {}
+#         headers[
+#             'User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
+#         req = urllib.request.Request(url, headers=headers)
+#         resp = urllib.request.urlopen(req)
+#
+#         soup = bs(resp, 'html.parser')
+#         table2 = soup.find('div', {'class': 'MT15'})
+#         trs = table2.find_all('tr')
+#         rows = []
+#         columns = ['SYMB', 'EXP', 'LTP', 'CH', 'CH(%)', 'H-L', 'AVG', 'VOL', 'VALUE', 'OI', 'OI-CH']
+#         for tr in trs[1:]:
+#             tds = tr.find_all('td')
+#             row = [td.text.replace('\n', '').strip() for td in tds]
+#             rows.append(row)
+#         df2 = pd.DataFrame(rows, columns=columns)
+#
+#         df2.drop(['VALUE'], axis=1, inplace=True)
+#         df2.reset_index(drop=True, inplace=False)
+#         oi = df2['OI-CH'].str.split("\r", expand=True)
+#         vol = df2['VOL'].str.split("\r\t\t\t\t\t\t\t\t", expand=True)
+#         df2.drop(['EXP', 'CH', 'H-L', 'AVG', 'OI-CH', 'VOL'], axis=1, inplace=True)
+#         df2["OI"] = oi[0]
+#         df2["OI(%)"] = oi[1]
+#         df2.drop(['OI'], axis=1, inplace=True)
+#         # df2["VOL"] = vol[0]
+#         df22 = df2.iloc[0:10, 0:4]
+#         return df22
+class NseIndia:
+    def __init__(self):
+        self.headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36'}
+        self.session = requests.Session()
+        self.session.get("http://nseindia.com", headers=self.headers)
 
-        soup = bs(resp, 'html.parser')
-        table1 = soup.find('div', {'class': 'MT15'})
-        trs = table1.find_all('tr')
-        rows = []
-        columns = ['SYMB', 'EXP', 'LTP', 'CH', 'CH(%)', 'H-L', 'AVG', 'VOL', 'VALUE', 'OI', 'OI-CH']
-        for tr in trs[1:]:
-            tds = tr.find_all('td')
-            row = [td.text.replace('\n', '').strip() for td in tds]
-            rows.append(row)
-        df1 = pd.DataFrame(rows, columns=columns)
-        df1.drop(['VALUE'], axis=1, inplace=True)
-        df1.reset_index(drop=True, inplace=False)
+    #--------------------CURRENT FUTURE SERIES DATA---------------------------------------
+    def historical_data_01(self,symbol,sdate):
+        # data = self.session.get(f"https://www.nseindia.com/api/historical/fo/derivatives?&from="+str(sdate)+"&to="+str(sdate)+"&expiryDate=29-Jun-2023&instrumentType=FUTIDX&symbol="+str(symbol)+"",
+        #    headers=self.headers).json()["data"]
+        if symbol=="NIFTY":
+            data = self.session.get(f"https://www.nseindia.com/api/historical/fo/derivatives?&from="+str(sdate)+"&to="+str(sdate)+"&expiryDate=31-Oct-2024&instrumentType=FUTIDX&symbol=" + str(symbol) + "",
+            headers=self.headers).json()["data"]
+        elif symbol=="BANKNIFTY":
+            data = self.session.get(f"https://www.nseindia.com/api/historical/fo/derivatives?&from=" + str(sdate) + "&to=" + str(sdate) + "&expiryDate=30-Oct-2024&instrumentType=FUTIDX&symbol="+ str(symbol) +"",
+                headers=self.headers).json()
 
-        oi = df1['OI-CH'].str.split("\r", expand=True)
+        df =pd.DataFrame(data)
+        return df
 
-        vol = df1['VOL'].str.split("\r\t\t\t\t\t\t\t\t", expand=True)
-        df1.drop(['EXP', 'CH', 'H-L', 'AVG', 'OI-CH', 'VOL'], axis=1, inplace=True)
-        df1["OI"] = oi[0]
-        df1["OI(%)"] = oi[1]
-        df1.drop(['OI'], axis=1, inplace=True)
-        df1["VOL"] = vol[0]
-        df11 = df1.iloc[0:10, 0:4]
-        return df11
-    def loosers(self):
-        url = "https://www.moneycontrol.com/stocks/fno/marketstats/futures/losers/homebody.php?opttopic=losers&optinst=stkfut&sel_mth=1&sort_order=0"
-        headers = {}
-        headers[
-            'User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
-        req = urllib.request.Request(url, headers=headers)
-        resp = urllib.request.urlopen(req)
+class NseLive():
+    def __init__(self):
+        self.headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36'}
+        self.session = requests.Session()
+        self.session.get("https://www.nseindia.com/get-quotes/derivatives?symbol=BPCL", headers=self.headers)
+    def daily_oi_data(self,sym):
+        r =self.session.get(f"https://www.nseindia.com/api/quote-derivative?symbol={sym}",headers=self.headers).json()
+        stock_data = r['stocks'][0]
+        marketDeptOrderBook = stock_data['marketDeptOrderBook']
+        tradeInfo = marketDeptOrderBook['tradeInfo']
+        oi_ch = tradeInfo['pchangeinOpenInterest']
+        return (oi_ch)
+class Nse_gainer():
+    def __init__(self):
+        self.headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36'}
+        self.session = requests.Session()
+        self.session.get("https://www.nseindia.com/market-data/live-equity-market?symbol=NIFTY%2050", headers=self.headers)
 
-        soup = bs(resp, 'html.parser')
-        table2 = soup.find('div', {'class': 'MT15'})
-        trs = table2.find_all('tr')
-        rows = []
-        columns = ['SYMB', 'EXP', 'LTP', 'CH', 'CH(%)', 'H-L', 'AVG', 'VOL', 'VALUE', 'OI', 'OI-CH']
-        for tr in trs[1:]:
-            tds = tr.find_all('td')
-            row = [td.text.replace('\n', '').strip() for td in tds]
-            rows.append(row)
-        df2 = pd.DataFrame(rows, columns=columns)
+    def daily(self):
+        r =self.session.get(f"https://www.nseindia.com/api/equity-stockIndices?index=SECURITIES%20IN%20F%26O",headers=self.headers).json()
+        gainer = r['data']
+        df = pd.DataFrame(gainer)
+        df1= df[['symbol','pChange']]
+        df_up =df1.head(10)
+        df_dn =df1.tail(10)
+        #df2 = df['pChange']
+        return df_up,df_dn
 
-        df2.drop(['VALUE'], axis=1, inplace=True)
-        df2.reset_index(drop=True, inplace=False)
-        oi = df2['OI-CH'].str.split("\r", expand=True)
-        vol = df2['VOL'].str.split("\r\t\t\t\t\t\t\t\t", expand=True)
-        df2.drop(['EXP', 'CH', 'H-L', 'AVG', 'OI-CH', 'VOL'], axis=1, inplace=True)
-        df2["OI"] = oi[0]
-        df2["OI(%)"] = oi[1]
-        df2.drop(['OI'], axis=1, inplace=True)
-        # df2["VOL"] = vol[0]
-        df22 = df2.iloc[0:10, 0:4]
-        return df22
+
+def run_at_morning():
+    nse = Nse_gainer()
+    nse_data =nse.daily()
+    df_up = nse_data[0]
+    df_dn = nse_data[1]
+    i=0
+    oi_data_up=[]
+    while i<10:
+        stk_01 =df_up['symbol'][i]
+        i = i+1
+        nselive = NseLive()
+        data_oi = round(nselive.daily_oi_data(stk_01),2)
+        oi_data_up.append(data_oi)
+
+    df=pd.DataFrame(oi_data_up,columns=['OI_CH'])
+    comb_up_df = pd.concat([df_up, df], axis=1)
+    df_1 = comb_up_df.loc[comb_up_df['OI_CH'] > 2.0]
+
+
+    df_dn_1 = df_dn.sort_values(['pChange'],ascending=True)
+    df_new =df_dn_1.reset_index(drop=True)
+
+    oi_data_dn = []
+    while i < 10:
+        stk_01 = df_new['symbol'][i]
+        i = i + 1
+        nselive = NseLive()
+        data_oi = round(nselive.daily_oi_data(stk_01), 2)
+        oi_data_up.append(data_oi)
+
+    df = pd.DataFrame(oi_data_up, columns=['OI_CH'])
+    comb_dn_df = pd.concat([df_new, df], axis=1)
+    df_2 = comb_dn_df.loc[comb_dn_df['OI_CH'] > 2.0]
+
+    return comb_up_df,comb_dn_df,df_1,df_2
 class money():
     def __init__(self):
         self.headers = {
@@ -254,5 +339,5 @@ def groww_data():
 
     df = pd.DataFrame(data)
     return df
-
+dd = run_at_morning()
 

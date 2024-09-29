@@ -28,10 +28,9 @@ def economics():
     h4 = soup.find_all('div', {'class': 'eachStory'})[3].find_all('a')[-1].text
     soup = bs4.BeautifulSoup(r.text, 'html.parser')
     h5 = soup.find_all('div', {'class': 'eachStory'})[4].find_all('a')[-1].text
-
-    data = [h1, h2, h3, h4]
+    data = {'Economics times': [h1, h2, h3, h4]}
     df = pd.DataFrame(data)
-    return data
+    return df
 
 
 def earning():
@@ -75,8 +74,8 @@ def bloomberg():
     h35 = soup.find_all('div', {'class': 'latest-updates-m__latest-updates__QOCdR'})[0].find_all('a')[3].text
     h36 = soup.find_all('div', {'class': 'latest-updates-m__latest-updates__QOCdR'})[0].find_all('a')[4].text
     h37 = soup.find_all('div', {'class': 'latest-updates-m__latest-updates__QOCdR'})[0].find_all('a')[5].text
-    data4 = [h33, h34, h35, h36, h37]
-    df = pd.DataFrame(data4)
+    data = {'Bloomberg': [h33, h34, h35, h36, h37]}
+    df = pd.DataFrame(data)
     return df
 
 def cnbc():
@@ -92,9 +91,8 @@ def cnbc():
     h34 = soup.find_all('div', {'class': 'jsx-95506e352219bddb story-meta'})[1].find_all('h2', {'class': 'jsx-95506e352219bddb story-title'})[0].text
     h35 = soup.find_all('div', {'class': 'jsx-95506e352219bddb story-meta'})[2].find_all('h2', {'class': 'jsx-95506e352219bddb story-title'})[0].text
     h36 = soup.find_all('div', {'class': 'jsx-95506e352219bddb story-meta'})[3].find_all('h2', {'class': 'jsx-95506e352219bddb story-title'})[0].text
-    #data3 = {'CNBC News': [h33, h34, h35, h36]}
-    data33 = [h33, h34,h35,h36]
-    df = pd.DataFrame(data33)
+    data3 = {'CNBC News': [h33, h34, h35, h36]}
+    df = pd.DataFrame(data3)
     return df
 def bt():
     url = "https://www.businesstoday.in/markets/company-stock"
@@ -119,7 +117,7 @@ def bt():
     h44 = ' '.join(words[:15])
     words = h55.split()
     h55 = ' '.join(words[:15])
-    list={'Bussiness today':[h11,h22,h33,h44,h55]}
-    df = pd.DataFrame(list)
+    data3 = {'CNBC News': [h11,h22,h33,h44,h55]}
+    df = pd.DataFrame(data3)
     return df
 
