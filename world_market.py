@@ -180,6 +180,7 @@ class NseLive():
         self.session = requests.Session()
         self.session.get("https://www.nseindia.com/get-quotes/derivatives?symbol=BPCL", headers=self.headers)
     def daily_oi_data(self,sym):
+        sym = sym.replace('&', '%26')
         r =self.session.get(f"https://www.nseindia.com/api/quote-derivative?symbol={sym}",headers=self.headers).json()
         stock_data = r['stocks'][0]
         marketDeptOrderBook = stock_data['marketDeptOrderBook']
@@ -220,25 +221,27 @@ def run_at_morning():
 
     df=pd.DataFrame(oi_data_up,columns=['OI_CH'])
     comb_up_df = pd.concat([df_up, df], axis=1)
-    df_1 = comb_up_df.loc[comb_up_df['OI_CH'] > 2.0]
+    # df_1 = comb_up_df.loc[comb_up_df['OI_CH'] > 2.0]
 
 
     df_dn_1 = df_dn.sort_values(['pChange'],ascending=True)
     df_new =df_dn_1.reset_index(drop=True)
 
     oi_data_dn = []
+    i=0
     while i < 10:
         stk_01 = df_new['symbol'][i]
         i = i + 1
         nselive = NseLive()
         data_oi = round(nselive.daily_oi_data(stk_01), 2)
-        oi_data_up.append(data_oi)
+        oi_data_dn.append(data_oi)
 
-    df = pd.DataFrame(oi_data_up, columns=['OI_CH'])
+    df = pd.DataFrame(oi_data_dn, columns=['OI_CH'])
     comb_dn_df = pd.concat([df_new, df], axis=1)
-    df_2 = comb_dn_df.loc[comb_dn_df['OI_CH'] > 2.0]
+    # df_2 = comb_dn_df.loc[comb_dn_df['OI_CH'] > 2.0]
 
-    return comb_up_df,comb_dn_df,df_1,df_2
+
+    return comb_up_df,comb_dn_df
 class money():
     def __init__(self):
         self.headers = {
@@ -339,5 +342,9 @@ def groww_data():
 
     df = pd.DataFrame(data)
     return df
-
-
+# nse = NseLive()
+# ch =nse.daily_oi_data('TATAMOTORS')
+# print(ch)
+# nse =Nse_gainer()
+# data =nse.daily()
+# print(data[0])

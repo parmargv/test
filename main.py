@@ -27,8 +27,8 @@ def main():
             absolute_path = os.path.dirname(__file__)
 
             df_data = world_market.run_at_morning()
-            df_1 = df_data[2]
-            df_2 = df_data[3]
+            df_1 = df_data[0]
+            df_2 = df_data[1]
 
             file_path = os.path.join(absolute_path, 'gainer.csv')
             with open(file_path, 'w') as file:
@@ -145,7 +145,7 @@ def main():
             st.table(df3)
 
     if choice == 'Market_movers':
-        st_autorefresh(interval=30 * 1000, key="dataframerefresh")
+        st_autorefresh(interval=60 * 1000, key="dataframerefresh")
         #st.markdown(f'<h1 style="color:#D78A1B;font-size:20px;">{"Nifty_Gainer_Looser"}</h1>', unsafe_allow_html=True)
 
         col1, col2 = st.columns(2)
