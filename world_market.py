@@ -339,5 +339,5 @@ def groww_data():
 
     df = pd.DataFrame(data)
     return df
-dd = run_at_morning()
+
 
